@@ -1,12 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ShoppingCart, Star } from 'lucide-react'
+import { ShoppingCart, Star, Heart } from 'lucide-react'
 import { useCart } from '../../context/CartContext'
+import { useWishlist } from '../../context/WishlistContext'
 import { formatPrice, getDiscountPercent } from '../../lib/utils'
 
 const ProductCard = ({ product }) => {
   const { addItem } = useCart()
+  const { toggleWishlist, isWishlisted } = useWishlist()
   const discount = getDiscountPercent(product.price, product.discount_price)
+  const wishlisted = isWishlisted(product.id)
 
   return (
     <div className="card group overflow-hidden">
@@ -33,6 +36,14 @@ const ProductCard = ({ product }) => {
             <span className="badge bg-gray-200 text-gray-600 text-sm px-3 py-1">Out of Stock</span>
           </div>
         )}
+        {/* Wishlist button */}
+        <button
+          onClick={(e) => { e.preventDefault(); toggleWishlist(product) }}
+          className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center shadow transition-all
+            ${wishlisted ? 'bg-red-500 text-white' : 'bg-white text-gray-400 hover:text-red-500'}`}
+        >
+          <Heart size={14} className={wishlisted ? 'fill-white' : ''} />
+        </button>
       </Link>
 
       {/* Info */}
@@ -43,7 +54,6 @@ const ProductCard = ({ product }) => {
             {product.title}
           </h3>
         </Link>
-
         {/* Rating */}
         <div className="flex items-center gap-1.5 mb-3">
           <div className="flex items-center gap-0.5">
@@ -57,7 +67,6 @@ const ProductCard = ({ product }) => {
           </div>
           <span className="text-xs text-gray-500">({product.review_count})</span>
         </div>
-
         {/* Price + Cart */}
         <div className="flex items-center justify-between gap-2">
           <div>

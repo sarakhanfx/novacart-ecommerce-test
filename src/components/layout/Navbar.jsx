@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-import { ShoppingCart, Search, User, Menu, X, ChevronDown } from 'lucide-react'
+import { ShoppingCart, Search, User, Menu, X, Heart } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useCart } from '../../context/CartContext'
+import { useWishlist } from '../../context/WishlistContext'
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -11,6 +12,7 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const { user, signOut } = useAuth()
   const { itemCount } = useCart()
+  const { wishlist } = useWishlist()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -80,7 +82,7 @@ const Navbar = () => {
                   type="text"
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  placeholder="Search products…"
+                  placeholder="Search products..."
                   className="w-48 md:w-64 px-3 py-1.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-nova-500"
                 />
                 <button type="button" onClick={() => setSearchOpen(false)} className="btn-ghost ml-1 p-2">
@@ -92,6 +94,16 @@ const Navbar = () => {
                 <Search size={20} />
               </button>
             )}
+
+            {/* Wishlist */}
+            <Link to="/wishlist" className="btn-ghost p-2 relative" aria-label="Wishlist">
+              <Heart size={20} />
+              {wishlist.length > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                  {wishlist.length > 9 ? '9+' : wishlist.length}
+                </span>
+              )}
+            </Link>
 
             {/* Cart */}
             <Link to="/cart" className="btn-ghost p-2 relative" aria-label="Cart">
@@ -149,6 +161,9 @@ const Navbar = () => {
                 {link.label}
               </Link>
             ))}
+            <Link to="/wishlist" className="block px-3 py-2.5 text-sm font-medium text-gray-700 hover:text-nova-600 hover:bg-nova-50 rounded-lg transition-colors">
+              Wishlist {wishlist.length > 0 && `(${wishlist.length})`}
+            </Link>
             <div className="pt-3 border-t border-gray-100 mt-3">
               {user ? (
                 <div className="flex gap-3">
