@@ -26,6 +26,7 @@ import AdminCustomers from './admin/pages/AdminCustomers'
 import AdminCategories from './admin/pages/AdminCategories'
 import AdminAnalytics from './admin/pages/AdminAnalytics'
 import AdminSettings from './admin/pages/AdminSettings'
+import AdminCoupons from './admin/pages/AdminCoupons'
 
 export default function App() {
   return (
@@ -54,6 +55,7 @@ export default function App() {
               <Route path="/admin/categories" element={<AdminGuard><AdminLayout><AdminCategories /></AdminLayout></AdminGuard>} />
               <Route path="/admin/analytics" element={<AdminGuard><AdminLayout><AdminAnalytics /></AdminLayout></AdminGuard>} />
               <Route path="/admin/settings" element={<AdminGuard><AdminLayout><AdminSettings /></AdminLayout></AdminGuard>} />
+              <Route path="/admin/coupons" element={<AdminGuard><AdminLayout><AdminCoupons /></AdminLayout></AdminGuard>} />
             </Routes>
           </WishlistProvider>
         </CartProvider>
