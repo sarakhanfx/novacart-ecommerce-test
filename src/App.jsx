@@ -28,7 +28,7 @@ import AdminSettings from './admin/pages/AdminSettings'
 
 export default function App() {
   return (
-    <BrowserRouter basename="/novacart">
+    <BrowserRouter basename="/novacart-ecommerce-test">
       <AuthProvider>
         <CartProvider>
           <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
